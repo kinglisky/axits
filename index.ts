@@ -33,3 +33,6 @@ const api = createRequestClient<TestAPISchema>({
         createUser: 'POST api/user',
     }
 });
+
+api.getUser({ id: 1 }).then(res => console.log(res.data.name));
+api.createUser({ name: 'xx', avatar: 1 }).then(res => console.log(res.data.xxx));
