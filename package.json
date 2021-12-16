@@ -1,0 +1,11 @@
+{
+  "name": "axits",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:kinglisky/axits.git",
+  "author": "芊野 <free.nan.sky@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.24.0"
+  }
+}
