@@ -29,7 +29,7 @@ function attachAPI<T extends APISchema>(
         // 配置为一个对象
         if (typeof apiConfig === 'object') {
             const { path, ...rest } = apiConfig as RequestOptions;
-            apiPath = path;
+            apiPath = path as RequestPath;
             apiOptions = rest;
         }
         hostApi[apiName] = (params, options) => {

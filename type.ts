@@ -1,6 +1,12 @@
 import { AxiosRequestHeaders, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+
+/** 去除可索引签名 */
+type RemoveIndexSignature<Obj extends Record<string, any>> = {
+    [Key in keyof Obj as Key extends `${infer Str}` ? Str : never]: Obj[Key];
+};
+
 // 路径配置
-export type RequestPath = string;
+export type RequestPath = `${Uppercase<RequestOptions['method']>} ${string}`;
 
 // 选项配置
 export type RequestOptions = {
@@ -31,11 +37,14 @@ export type CreateRequestConfig<T extends APISchema> = {
     headerHandlers?: Array<HeaderHandler>;
     errorHandler?: RequestErrorHandler;
     apis: {
-        [K in keyof T]: APIConfig;
+        [K in keyof RemoveIndexSignature<T>]: APIConfig;
     };
 };
 
 // 创建请求客户端的类型约束
 export type CreateRequestClient<T extends APISchema> = {
-    [K in keyof T]: RequestFunction<T[K]['request'], AxiosResponse<T[K]['response']>>;
+    [K in keyof RemoveIndexSignature<T>]: RequestFunction<
+        RemoveIndexSignature<T>[K]['request'],
+        AxiosResponse<RemoveIndexSignature<T>[K]['response']>
+    >;
 };
